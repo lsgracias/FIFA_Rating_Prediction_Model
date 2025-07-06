@@ -1,24 +1,26 @@
 # FIFA_Rating_Prediction_Model
 
+# Predicting FIFA Rating Changes from Player Injuries
+
 ## Team
 - Jade Matrone (jmatrone)
 - Nikki Shimao (nikkishimao)
 - Shivani Pandeti (shivani-pandeti)
 - Lauren Gracias (lsgracias)
 
-## Introduction
+### Introduction
 Injuries are a pivotal factor in the trajectory of a professional soccer player's career, yet decisions around player development, selection, or trade are often made with limited empirical evidence on how injuries affect long-term performance. Our project seeks to address this gap by building a predictive model that estimates the change in a player’s FIFA rating based on their age, number of injuries, and the severity of those injuries. FIFA ratings are widely used as standardized performance metrics by clubs, scouts, and analysts, making them a relevant and accessible proxy for assessing the career impact of injuries.
 
 Our primary stakeholders include soccer clubs, coaching staff, trainers, and sports analysts—individuals who can benefit from evidence-based tools to inform decisions related to injured players. By providing a model that predicts whether a player’s rating is likely to increase, decrease, or remain stable following injury, our work offers a data-driven layer of insight into post-injury performance recovery.
 
 We approach this need by training machine learning models on a dataset that combines detailed injury histories with official FIFA ratings from the most recent seasons. While our solution is not exhaustive—due to limitations in historical data availability and the subjective nature of FIFA scores—it represents a meaningful step toward quantifying the impact of injuries on player value and developing more informed, data-supported approaches to player evaluation.
 
-## Literature Review
+### Literature Review
 The impact of injuries in professional soccer has been widely studied with a focus on outcomes like physical performance decline, team success, recovery time, methods of injury prevention, and financial costs. Many studies utilized a combination of statistical methods and machine learning algorithms, including regression models, decision trees, support vector machines, and forecasting techniques. Some research on the A-League and Spanish LaLiga™ found that injuries negatively affect goal difference, match points, and player speed (Lu & Raya-González). In addition, a broader study on European soccer teams showed a direct link between injury burden and team success, with lower injury rates correlating with better league rankings (Hägglund). Other studies also focused on the injuries of those in certain positions, while a more data-driven approach applied GPS tracking and machine learning to forecast injuries. This study demonstrated improved accuracy and provided some actionable insights for injury prevention (Rossi). While previous studies provide valuable insights into short-term injury effects, they often fail to consider long-term player development and perceived performance value.
 
 Specifically, little research has examined how injuries affect players over time, especially through a lens of standardized performance metrics. FIFA ratings offer a consistent metric for player value but are underutilized in academic research. One study did attempt to analyze player performance changes, but did not define key players or use FIFA scores as a consistent metric (Szczecinski). In our proposal, we initially considered defining key players by their FIFA scores, but ultimately shifted focus toward predicting the rating changes based on injury frequency, severity, and age. This pivot emphasizes player trajectories and helps to bridge the gap between existing injury analytics and real-world player evaluation tools used in the soccer industry. 
 
-## Data
+### Data
 Our dataset merges multiple open and scraped sources. Injury and player metadata were sourced from a GitHub repository containing scraped records from Transfermarkt and FBREF, including data on injury type, duration, position, and club affiliation. FIFA rating data for FC24 and FC25 was manually scraped from Fifaratings.com due to the lack of accessible APIs or bulk download options.
 
 - https://github.com/pkardjian/soccer_injury_risk_prediction/blob/main/README.md
@@ -28,7 +30,7 @@ We focused exclusively on players from top European leagues and applied a minimu
 
 In addition to injury and demographic information, we incorporated performance metrics such as average number of passes, goals, and touches per game to strengthen the model’s predictive power. Visualizations in the accompanying notebook—including heatmaps, bar charts, and boxplots—illustrate the distribution of injury types, player characteristics, and rating change trends post-injury.
 
-## Methods
+### Methods
 We framed the problem as both a regression task (predicting continuous FIFA rating changes) and a classification task (predicting the direction of rating change: increase or decrease). Key preprocessing steps included expanding injury records into individual columns by injury type, calculating a total days injured metric, and converting categorical variables such as position into dummy variables.
 
 For regression, we tested Linear Regression, Decision Tree Regressor, Random Forest Regressor, and Gradient Boosting Regressor. For classification, we evaluated Decision Tree and Gradient Boosting classifiers. Hyperparameter tuning and validation strategies (including train-test splits and cross-validation) were used to assess model performance. While the Decision Tree Classifier achieved strong results in predicting rating direction, we ultimately chose to focus on the regression approach. This decision was made to allow for a more nuanced understanding of how individual features—such as age, injury severity, and performance metrics—contribute to the magnitude of rating change.
@@ -41,7 +43,7 @@ We then reformulated the problem as a classification task by categorizing rating
 
 To further evaluate the potential for predicting specific changes in ratings, we also framed the task as a multi-class classification problem. In this setup, each class represented an exact change in player rating. We tested both Decision Tree and Gradient Boosting classifiers, including versions with increased tree depth to handle potential feature interactions and non-linearities. Due to the granularity of this approach, special attention was given to handling class imbalance and evaluating model generalization.
 
-## Results
+### Results
 We began by exploring regression and classification approaches using the original dataset, which combined player performance statistics and injury history. This dataset included key features such as age, birth year, total days injured, and FIFA ratings from FC 24 and FC 25 editions.
 The target variable was defined as the difference in FIFA ratings between FC 24 and FC 25, representing the rating_change. In this original setup, we applied several regression models to predict rating change as a continuous outcome. The Random Forest Regressor achieved an R² score of 0.8281727549884175, and the Gradient Boosting Regressor performed even better with an R² score of 0.9043430456294668. In contrast, a basic Linear Regression model had a much lower R² of 0.07528541507215347, confirming that tree-based methods were better suited to this feature space. These strong results suggested potential predictive value, although the feature engineering was still limited in scope at this stage.
 
@@ -55,12 +57,12 @@ In the second classification setup, we used the actual numeric rating change val
 
 While early regression results on the original dataset showed strong performance, the expanded and transformed dataset revealed limitations related to data size, overfitting, and weak feature-target relationships. More data and better feature refinement will be necessary for stable, generalizable predictions.
 
-## Discussions
+### Discussions
 Our goal was to build a model that predicts FIFA rating changes after injury to support decisions made by coaches, analysts, and recruitment staff. While we achieved strong results on the original dataset, especially using tree-based regression models, performance dropped significantly after transformation due to limited data and increased feature complexity. Classification models provided some directional insights but lacked consistency.
 
 Although our models didn’t fully meet the goal of accurate post-injury prediction, the work still offers useful signals about which injury factors matter most. To better serve stakeholder needs, future work should focus on increasing dataset size, improving class balance, and incorporating richer contextual or recovery-based features. Collaborating with clubs to access detailed recovery data - such as rehabilitation duration, training intensity, and match fitness - could enhance model precision. In addition, incorporating qualitative information like medical assessments or expert ratings may help bridge the gap between statistical predictions and real-world performance outcomes. With these improvements, the model could become a more actionable tool to support transfer decisions, training plans, and injury management strategies.
 
-## Limitations
+### Limitations
 While our project uses machine learning to better understand how injuries affect player performance, several limitations constrain the depth and generalizability of our findings. First, our analysis was restricted by limited historical data availability. We were confined to only the most recent FIFA scores in order to analyze the change from 2024 to 2025, which constrains our ability to model long-term trends or delayed performance effects. A broader time range would have helped us capture cumulative injury impacts and better reflect real-world player development arcs. Also, the subjective nature of the FIFA scores introduced a degree of noise into our target variable. Although FIFA ratings are widely recognized in the soccer industry, they are not based on strictly objective or completely transparent performance algorithms, which may skew some results.  
 
 In addition, our data integration process required extensive manual cleaning, like standardizing player names and handling missing values due to scraping issues. These preprocessing steps were necessary for our project, but did open doors for more inconsistency and may have led to the exclusion of valid cases. Also, we did include injury type and duration as indicators for severity, but we did lack contextual factors like match load or training intensity. This limits our ability to differentiate between injuries with similar durations but vastly different implications for performance and recovery.
@@ -69,12 +71,12 @@ Another key limitation arose from our expanded dataset, which included more gran
 
 In addition, stakeholder needs were only partially addressed. While we focused on injury impacts on player ratings, we did not include match importance or player role as separate factors, which could have influenced the injury recovery process and player performance post-injury. These factors are crucial for clubs when evaluating injury impacts on a player's long-term value to the team. Lastly, despite using SHAP for model interpretability, we recognize that our analysis was still limited in how deeply we could interpret complex injury-performance relationships. While SHAP helped identify key drivers such as injury type and severity, understanding the nuanced interaction of multiple injury events, player recovery time, and match circumstances remains a challenging task. Further exploration with more data and improved feature engineering could potentially offer deeper insights into these relationships.
 
-## Future Work
+### Future Work
 We feel that our project could be improved and extended in many different ways. One of the most obvious steps we would like to take next would be to incorporate more FIFA rating data from multiple seasons so that we can better capture long-term trends. By including more seasons or even other leagues we could enhance the model robustness and generalizability. While our model focuses on rating changes as the primary outcome, future work could explore alternative or complementary outcome variables, such as changes in market value, number of matches played post-injury, or subsequent transfer activity. These indicators may offer different perspectives on a player’s perceived value and career trajectory after injury. In order to expand on our model, we would also like to explore other interactions like between injury timing and age. This would help us to see whether younger players recover their ratings more effectively than older players after similar injuries. Including team-level context like minutes played, club success, or squad rotation, could also provide additional predictive power.
 
 Also, future iterations of our project could involve stakeholder feedback in order to evaluate how predictive tools like ours could be embedded into decision-making workflows. Incorporating real-world decision criteria could make the model more actionable in professional settings.
 
-## Citations
+### Citations
 Hägglund, Martin, et al. “Injuries Affect Team Performance Negatively in Professional Football: 
 An 11-Year Follow-up of the UEFA Champions League Injury Study.” British Journal of Sports Medicine, BMJ Publishing Group Ltd and British Association of Sport and Exercise Medicine, 1 Aug. 2013, bjsm.bmj.com/content/47/12/738.short. 
 
