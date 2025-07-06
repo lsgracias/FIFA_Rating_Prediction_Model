@@ -1,8 +1,8 @@
 # FIFA_Rating_Prediction_Model
 
-# Predicting FIFA Rating Changes from Player Injuries
+## Predicting FIFA Rating Changes from Player Injuries
 
-## Team
+### Team
 - Jade Matrone (jmatrone)
 - Nikki Shimao (nikkishimao)
 - Shivani Pandeti (shivani-pandeti)
